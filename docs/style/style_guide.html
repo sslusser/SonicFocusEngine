@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sonic Focus Engine — Style Guide</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <meta name="description" content="Visual style menu for Sonic Focus Engine. Use these classes and patterns only." />
+</head>
+
+<body>
+
+  <!-- Top bar (uses existing nav styles) -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <nav class="nav" aria-label="Style Guide Navigation">
+        <a class="is-active" href="#overview">Overview</a>
+        <a href="#typography">Typography</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#chips">Chips</a>
+        <a href="#cards">Cards</a>
+        <a href="#stats">Stats</a>
+        <a href="#forms">Forms</a>
+        <a href="#tables">Tables</a>
+        <a href="#layout">Layout</a>
+        <a href="#hero">Hero</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Overview -->
+  <section id="overview" class="section">
+    <div class="container">
+      <h1 class="h1">Sonic Focus Engine — Style Menu</h1>
+      <p>This page defines how UI must look. Use these classes and patterns only. No inline styles. No utility classes.
+        All spacing, color, typography must come from <code>variables.css</code> and the component CSS.</p>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section id="typography" class="section">
+    <div class="container">
+      <h2 class="h2">Typography</h2>
+      <p>Headings use display font. Body uses body font. Maintain the hierarchy below.</p>
+
+      <h1 class="h1">H1 Display Heading</h1>
+      <h2 class="h2">H2 Section Heading</h2>
+      <h3 class="h3">H3 Subsection Heading</h3>
+      <p>Paragraph. Secondary body color and 1.6 line-height. Keep line length to about 60–70 characters.</p>
+      <p class="caption">Caption and small print. Use for footnotes, helper text, or meta labels.</p>
+      <p><a href="#">Standard link</a> inside body copy.</p>
+    </div>
+  </section>
+
+  <!-- Buttons -->
+  <section id="buttons" class="section">
+    <div class="container">
+      <h2 class="h2">Buttons</h2>
+      <p>Accent is reserved for primary CTAs. Secondary is neutral. Avoid additional variants.</p>
+      <p>
+        <a class="btn btn-primary" href="#">Primary Button</a>
+        <a class="btn btn-secondary" href="#">Secondary Button</a>
+        <a class="btn" href="#">Default Button</a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Chips -->
+  <section id="chips" class="section">
+    <div class="container">
+      <h2 class="h2">Chips</h2>
+      <div class="chips" aria-label="Chip examples">
+        <span class="chip chip-on">Active Chip</span>
+        <span class="chip">Neutral Chip</span>
+        <span class="chip">Another Chip</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Cards -->
+  <section id="cards" class="section">
+    <div class="container">
+      <h2 class="h2">Cards</h2>
+      <div class="grid-3">
+        <article class="card">
+          <h3 class="card-title">Card Title</h3>
+          <p>Card body text. Glass surface, thin border, soft shadow.</p>
+          <p><a class="btn btn-secondary" href="#">Action</a></p>
+        </article>
+        <article class="card">
+          <h3 class="card-title">Card Title</h3>
+          <p>Cards should be used to group related content. Avoid nesting cards.</p>
+        </article>
+        <article class="card">
+          <h3 class="card-title">Card Title</h3>
+          <p>Cards use spacing tokens only; never hard-code paddings or margins.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section id="stats" class="section">
+    <div class="container">
+      <h2 class="h2">Stats</h2>
+      <div class="grid-3">
+        <article class="stat stat-accent">
+          <div class="stat-kicker">Kicker</div>
+          <div class="stat-value">82+</div>
+          <div class="stat-label">Completed Projects</div>
+        </article>
+        <article class="stat">
+          <div class="stat-kicker">Years</div>
+          <div class="stat-value">15</div>
+          <div class="stat-label">In Technology</div>
+        </article>
+        <article class="stat">
+          <div class="stat-kicker">Awards</div>
+          <div class="stat-value">12</div>
+          <div class="stat-label">Recognitions</div>
+        </article>
+      </div>
+      <p class="caption">Use <code>.stat-accent</code> sparingly for emphasis. Most stats should use the neutral style.
+      </p>
+    </div>
+  </section>
+
+  <!-- Forms -->
+  <section id="forms" class="section">
+    <div class="container">
+      <h2 class="h2">Forms</h2>
+      <form action="#" method="post" aria-describedby="form-notes">
+        <div class="form-group">
+          <label class="form-label" for="email">Email</label>
+          <input class="form-input" id="email" name="email" type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="select">Preset</label>
+          <select class="form-select" id="select" name="preset">
+            <option>Deep Flow</option>
+            <option>Bright Wash</option>
+            <option>Night Drift</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="message">Notes</label>
+          <textarea class="form-textarea" id="message" name="message" rows="5"></textarea>
+          <div class="form-error" id="form-notes">Example error message or helper text.</div>
+        </div>
+        <p><button class="btn btn-primary" type="submit">Submit</button></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- Tables -->
+  <section id="tables" class="section">
+    <div class="container">
+      <h2 class="h2">Tables</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Preset</th>
+            <th>Fundamental</th>
+            <th>Duration</th>
+            <th>Seed</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Deep Flow</td>
+            <td>136.1 Hz</td>
+            <td>120 min</td>
+            <td>42</td>
+          </tr>
+          <tr>
+            <td>Bright Wash</td>
+            <td>528 Hz</td>
+            <td>90 min</td>
+            <td>17</td>
+          </tr>
+          <tr>
+            <td>Night Drift</td>
+            <td>60 Hz</td>
+            <td>180 min</td>
+            <td>99</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="caption">Tables show hairline dividers and neutral text. Avoid dense, data-heavy layouts.</p>
+    </div>
+  </section>
+
+  <!-- Layout examples -->
+  <section id="layout" class="section">
+    <div class="container">
+      <h2 class="h2">Layout</h2>
+      <p>Use <code>.container</code> to set max width and horizontal padding. Use section spacing classes for vertical
+        rhythm.</p>
+      <div class="grid-3">
+        <article class="card">
+          <h3 class="card-title">Grid Column</h3>
+          <p>Three column grid at desktop, single column on mobile.</p>
+        </article>
+        <article class="card">
+          <h3 class="card-title">Grid Column</h3>
+          <p>Gaps and paddings come from spacing tokens only.</p>
+        </article>
+        <article class="card">
+          <h3 class="card-title">Grid Column</h3>
+          <p>No ad hoc grid classes. Add new grids in <code>/layout/layout.css</code> if required.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Hero pattern -->
+  <section id="hero" class="section">
+    <div class="container">
+      <h2 class="h2">Hero Pattern</h2>
+      <p>Use the hero for top-of-page decks. Keep copy short. Add the optional decorative planet arc if desired.</p>
+      <section class="hero">
+        <!-- optional: <div class="planet-arc" aria-hidden="true"></div> -->
+        <div class="container">
+          <div class="hero-kicker">Generative Audio</div>
+          <h1 class="hero-title">Where Innovation Meets Sound.</h1>
+          <p class="hero-subtitle">Long-form, frequency-centered soundscapes for deep focus and flow.</p>
+          <p>
+            <a class="btn btn-primary" href="#">Primary CTA</a>
+            <a class="btn btn-secondary" href="#">Secondary</a>
+          </p>
+        </div>
+      </section>
+      <p class="caption">Hero uses oversized display type and sparing accent. Do not add more than two CTAs.</p>
+    </div>
+  </section>
+
+  <footer class="section">
+    <div class="container">
+      <p class="caption">This style menu is the source of truth. New UI must reuse these classes or propose additions
+        under <code>/components</code> only.</p>
+    </div>
+  </footer>
+
+</body>
+
+</html>

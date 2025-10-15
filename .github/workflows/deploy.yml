@@ -1,0 +1,23 @@
+name: 🚀 SFTP Deploy to Hostinger
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v3
+
+      - name: 🚀 Deploy over SFTP
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SFTPPRIVATEKEY }}
+          REMOTE_HOST:     ${{ secrets.SFTPHOST }}
+          REMOTE_USER:     ${{ secrets.SFTPUSER }}
+          REMOTE_PORT:     ${{ secrets.SFTPPORT }}
+          SOURCE: .
+          TARGET: /home/u148772981/domains/sonicfocusengine.com/public_html/
+          ARGS: "-rltgoDzvO --delete"

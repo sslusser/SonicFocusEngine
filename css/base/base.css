@@ -1,0 +1,32 @@
+/* minimal reset */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  color: var(--color-fg-0);
+  background:
+    radial-gradient(1200px 700px at 20% 8%, #132032 0%, transparent 60%),
+    radial-gradient(900px 600px at 80% 90%, #0d2132 0%, transparent 60%),
+    var(--color-bg-0);
+  font-family: var(--font-body);
+  font-size: var(--fs-400);
+  line-height: 1.6;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+
+a { color: var(--color-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+
+h1, .h1 { font-family: var(--font-display); font-size: var(--fs-700); margin: 0 0 var(--space-5); line-height: 1; }
+h2, .h2 { font-family: var(--font-display); font-size: var(--fs-600); margin: var(--space-7) 0 var(--space-4); }
+h3, .h3 { font-size: var(--fs-500); margin: var(--space-6) 0 var(--space-3); }
+p { color: var(--color-fg-1); margin: 0 0 var(--space-5); }
+
+small, .caption { font-size: var(--fs-300); color: var(--color-fg-2); }

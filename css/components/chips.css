@@ -1,0 +1,15 @@
+.chips {
+  display: flex; gap: var(--space-3); flex-wrap: wrap;
+  padding: var(--space-5) 0;
+  border-top: 1px solid var(--color-line);
+  border-bottom: 1px solid var(--color-line);
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-line);
+  color: var(--color-fg-1);
+  background: rgba(255,255,255,.02);
+}
+.chip-on { border-color: var(--color-accent); color: var(--color-fg-0); }

@@ -1,0 +1,13 @@
+.card {
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.015));
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  padding: var(--space-6);
+}
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-500);
+  margin: 0 0 var(--space-3);
+  color: var(--color-fg-0);
+}

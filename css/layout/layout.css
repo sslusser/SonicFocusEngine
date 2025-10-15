@@ -1,0 +1,26 @@
+.container {
+  width: min(100% - 2*var(--space-6), var(--container-max));
+  margin-inline: auto;
+}
+
+.section { padding: var(--space-8) 0; }
+.section--tight { padding: var(--space-6) 0; }
+
+/* header nav shell */
+.site-header {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in oklab, var(--color-bg-0) 85%, transparent);
+  backdrop-filter: saturate(120%) blur(8px);
+  border-bottom: 1px solid var(--color-line);
+  padding: var(--space-3) 0;
+}
+
+/* simple grid for cards and stats */
+.grid-3 {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(3, minmax(0,1fr));
+}
+@media (max-width: 900px) {
+  .grid-3 { grid-template-columns: 1fr; }
+}

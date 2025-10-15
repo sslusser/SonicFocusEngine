@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SFE Command Builder</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container">
+      <nav class="nav" aria-label="Nav">
+        <a class="is-active" href="#">Command Builder</a>
+        <a href="/">Home</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <h1 class="h1">Sonic Focus Engine — Command Builder</h1>
+      <p>Configure parameters, then copy the generated command and run it in your terminal. This does not render audio
+        in the browser; it only builds the command for <code>scripts/sfe_renderer.py</code>.</p>
+
+      <form id="builder" class="card" autocomplete="off" novalidate>
+        <h2 class="h2">Render Settings</h2>
+
+        <div class="form-group">
+          <label class="form-label" for="freq">Fundamental frequency (Hz)</label>
+          <input class="form-input" id="freq" name="freq" type="number" step="0.01" value="136.1" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="minutes">Duration (minutes)</label>
+          <input class="form-input" id="minutes" name="minutes" type="number" min="1" max="360" value="10" required>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="sr">Sample rate</label>
+          <select class="form-select" id="sr" name="sr">
+            <option value="44100">44100</option>
+            <option value="48000" selected>48000</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="bit">Bit depth</label>
+          <select class="form-select" id="bit" name="bit">
+            <option value="16">16</option>
+            <option value="24" selected>24</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="stereo">Channels</label>
+          <select class="form-select" id="stereo" name="stereo">
+            <option value="st" selected>Stereo</option>
+            <option value="mo">Mono</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="seed">Seed (optional)</label>
+          <input class="form-input" id="seed" name="seed" type="number" placeholder="leave blank for random">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="out">Basename (optional)</label>
+          <input class="form-input" id="out" name="out" type="text" placeholder="e.g., deep_flow_136">
+          <p class="caption">Saved to <code>wav/</code> automatically. Extension is added if missing.</p>
+        </div>
+
+        <fieldset class="card" style="padding:0;border:none">
+          <div class="p-4">
+            <h3 class="h3">Loop Options (optional)</h3>
+            <p class="caption">For 60-minute loop-ready masters (method: end→start crossfade baked in). Requires script
+              support; safe to leave off.</p>
+            <div class="form-group">
+              <label class="form-label" for="loopready">Loop-ready export</label>
+              <select class="form-select" id="loopready">
+                <option value="off" selected>Off</option>
+                <option value="on">On</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="xfsec">Crossfade seconds</label>
+              <input class="form-input" id="xfsec" type="number" min="1" max="15" value="5">
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="form-group">
+          <label class="form-label" for="runner">Runner (use python3 on macOS)</label>
+          <select class="form-select" id="runner">
+            <option value="python3" selected>python3</option>
+            <option value="python">python</option>
+          </select>
+        </div>
+
+        <p>
+          <button class="btn btn-primary" type="button" id="build">Build Command</button>
+          <button class="btn" type="button" id="copy" disabled>Copy</button>
+          <button class="btn" type="button" id="download" disabled>Download .sh</button>
+        </p>
+      </form>
+
+      <section class="section">
+        <h2 class="h2">Generated Command</h2>
+        <div class="card">
+          <pre id="cmd" class="card" style="white-space:pre-wrap;word-break:break-word"></pre>
+          <p class="caption">Run this from your repo root. Output lands in <code>wav/</code>.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="section--tight footer">
+    <div class="container">
+      <p class="caption">This page does not render audio. It only builds commands for your local CLI.</p>
+    </div>
+  </footer>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const fields = ["freq", "minutes", "sr", "bit", "stereo", "seed", "out", "runner", "loopready", "xfsec"];
+
+    function buildCommand() {
+      const vals = Object.fromEntries(fields.map(f => [f, $(f).value.trim()]));
+      const stereoFlag = vals.stereo === "st" ? "--stereo" : "";
+      const seedFlag = vals.seed ? `--seed ${vals.seed}` : "";
+      const outFlag = vals.out ? `--out ${shellEscape(vals.out)}` : "";
+
+      // Optional loop flags (only include if on; your script can ignore unknown flags safely if not implemented yet)
+      const loopFlags = (vals.loopready === "on")
+        ? `--loop-ready --xf-sec ${Number(vals.xfsec) || 5}`
+        : "";
+
+      // command
+      const cmd = `${vals.runner} scripts/sfe_renderer.py --freq ${Number(vals.freq)} --minutes ${parseInt(vals.minutes, 10)} --sr ${parseInt(vals.sr, 10)} --bit ${parseInt(vals.bit, 10)} ${stereoFlag} ${seedFlag} ${outFlag} ${loopFlags}`.replace(/\s+/g, ' ').trim();
+      $("cmd").textContent = cmd;
+      $("copy").disabled = false;
+      $("download").disabled = false;
+    }
+
+    function shellEscape(s) {
+      if (!s) return "";
+      // basic POSIX-safe quoting
+      return `'${s.replace(/'/g, "'\\''")}'`;
+    }
+
+    $("build").addEventListener("click", buildCommand);
+    $("copy").addEventListener("click", async () => {
+      const cmd = $("cmd").textContent;
+      if (!cmd) return;
+      try { await navigator.clipboard.writeText(cmd); $("copy").textContent = "Copied"; setTimeout(() => $("copy").textContent = "Copy", 1200); } catch (e) { }
+    });
+    $("download").addEventListener("click", () => {
+      const cmd = $("cmd").textContent;
+      if (!cmd) return;
+      const script = `#!/usr/bin/env bash
+set -euo pipefail
+cd "$(dirname "$0")"/..
+${cmd}
+`;
+      const blob = new Blob([script], { type: "text/x-sh" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "run_render.sh";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+  </script>
+</body>
+
+</html>
